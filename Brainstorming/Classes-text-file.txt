@@ -1,0 +1,33 @@
+subclasses:
+Pawn: methods: + isValidMove(fromSquare: Square, toSquare: Square): bool
+Knight: methods: + isValidMove(fromSquare: Square, toSquare: Square): bool
+Bishop: methods: + isValidMove(fromSquare: Square, toSquare: Square): bool
+Rook: methods: + isValidMove(fromSquare: Square, toSquare: Square): bool
+Queen: methods: + isValidMove(fromSquare: Square, toSquare: Square): bool
+King: methods: + isValidMove(fromSquare: Square, toSquare: Square): bool
+
+Classes:
+Chessboard: properties: - board: Boolean [ ] [ ]
+- ROWS: int
+- COLS: int, methods: + initializeBoard(): void
++ movePiece(piece: ChessPiece, fromSquare: Square, toSquare: Square): bool
++ isCheckmate(color: Color) bool
++ isStalemate(color: Color): bool
+
+Controller: properties: - model: ChessBoard
+- view: View, methods: # <<constructor>> Controller( )
+# isWin( ) : boolean
+#isSurrender( ) : boolean
+#newGame( ) : void
+
+View: properties: - model: ChessBoard
+- menuBar: Menubar
+- alert: Alert
+- board: GridPane, methods: + start(primaryStage: Stage): void
++ initMenu(controller: Controller): boolean
++ showAlertMessage(reader: String, message: String) : void
+- shouldbeFilled(x: int, y: int, sizeX: int, sizeY: int): boolean
+
+Interfaces:
+ChessLogic: method: << constructor >> ChessLogic( )
+ChessPieces: properties - color: Color, methods: + isValidMove(fromSquare: Square, toSquare: Square): bool
