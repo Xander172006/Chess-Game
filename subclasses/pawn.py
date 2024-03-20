@@ -9,9 +9,13 @@ class Pawn:
         self.position = (starting_rank, 2) if color == "white" else (starting_rank, 7)
 
     # move rule
-    def move(self, new_position):
-        self.position = new_position
-        self.has_moved = True
+    def move(self, current_position, new_position):
+        if self.position == current_position:
+            self.position = new_position
+            self.has_moved = True
+            print(self.position, new_position)
+
+        print(f"move has been made")
 
     # capture rule
     def capture(self):

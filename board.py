@@ -49,8 +49,6 @@ class Board:
 
     # draw the pieces
     def drawPieces(self, board):
-        positions = {"white": {}, "black": {}}
-
         for piece in self.pieces:
             # get the position of the piece
             position = piece.position

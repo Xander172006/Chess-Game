@@ -13,8 +13,13 @@ class King:
             self.position = ("e", 8)
 
     # move rule
-    def move(self):
-        pass
+    def move(self, current_position, new_position):
+        if self.position == current_position:
+            self.position = new_position
+            self.has_moved = True
+            print(self.position, new_position)
+
+        print(f"move has been made")
 
     # castle rule
     def castle(self):
