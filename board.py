@@ -7,6 +7,7 @@ class Board:
         self.square_size = 75 
         self.width = 8 * self.square_size
         self.height = 8 * self.square_size
+        self.selected_position = None
         
         self.font = pygame.font.Font(None, 20)
         self.pieces = pieces
@@ -21,10 +22,21 @@ class Board:
         self.drawBoard(board)
         self.drawPieces(board)
 
+        if self.selected_position:
+            x = ord(self.selected_position[0]) - ord('a')
+            y = 8 - self.selected_position[1]
+            rect = pygame.Rect(x * self.square_size, y * self.square_size, self.square_size, self.square_size)
+            pygame.draw.rect(board, (255, 0, 0), rect, 3)
+
         # create chessboard
         screen.blit(board, (20, 20))
         pygame.display.flip()
-        
+
+    def highlight_square(self, file_index, rank_index):
+        self.selected_position = file_index, rank_index
+
+    def remove_highlight(self):
+        self.selected_position = None
 
     # draw the board 
     def drawBoard(self, board):
@@ -63,6 +75,7 @@ class Board:
             # return the current position from getPosition
             str(Position(file_index, rank_index, piece, piece.color))
 
+
     # get the piece
     def get_piece(self, file_index, rank_index):
         for piece in self.pieces:
@@ -70,3 +83,9 @@ class Board:
                 return piece
             
         return "Empty Square"
+    
+    def remove_piece(self, piece):
+        for piece in self.pieces:
+            if piece.position == piece.position:
+                self.pieces.remove(piece)
+                break

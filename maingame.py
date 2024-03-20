@@ -19,10 +19,9 @@ pygame.init()
 
 class MainGame:
     def __init__(self):
+        # fundamentals of the game
         self.chessboard = Board(self.create_pieces())
         self.chessmoves = ChessMove(self.chessboard)
-
-        self.current_player = "white"
 
         self.pawn = Pawn(self.chessboard, self.chessmoves)
         self.knight = Knight(self.chessboard, self.chessmoves)
@@ -30,39 +29,41 @@ class MainGame:
         self.rook = Rook(self.chessboard, self.chessmoves)
         self.queen = Queen(self.chessboard)
         self.king = King(self.chessboard)
+
+        # set beginning player
+        self.current_player = "white"
+
+        # set the selected piece to None
+        self.selected_piece = None
         self.pieces = None
 
 
-    # return the pieces
+    # returns array of pieces
     def create_pieces(self):
         pieces = []
 
-        # add 8 pawns
+        # 8 pawns
         for color in ["white", "black"]:
             for i in range(8):
                 pieces.append(Pawn(color, chr(ord('a') + i)))
 
-        # add 2 knights
         for color in ["white", "black"]:
+            # 2 knights
             pieces.append(Knight(color, "b"))
             pieces.append(Knight(color, "g"))
 
-        # add 2 bishops
-        for color in ["white", "black"]:
+            # 2 bishops
             pieces.append(Bishop(color, "c"))
             pieces.append(Bishop(color, "f"))
 
-        # add 2 rooks
-        for color in ["white", "black"]:
+            # 2 rooks
             pieces.append(Rook(color, "a" if color == "white" else "h"))
             pieces.append(Rook(color, "a" if color == "black" else "h"))
 
-        # add 1 queens
         for color in ["white", "black"]:
+            # 1 queen
             pieces.append(Queen(color))
-
-        # add 1 kings
-        for color in ["white", "black"]:
+            # 1 king
             pieces.append(King(color))
 
         return pieces
@@ -72,79 +73,78 @@ class MainGame:
         screen = pygame.display.set_mode(size)
         pygame.display.set_caption("Chess Game")
 
+        # instantiate the board
         self.chessboard.mainloop(screen)
-        selected_piece = None
 
-        # initialize the game
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONUP:
                     x, y = pygame.mouse.get_pos()
                     file_index = chr(ord('a') + (x // self.chessboard.square_size))
                     rank_index = 8 - (y // self.chessboard.square_size)
-                    
-                    # select piece or move
-                    if selected_piece is None:
-                        selected_piece = self.chessmoves.set_piece(file_index, rank_index)
-                        print(f"selected piece: {selected_piece}")
+
+
+                    if self.selected_piece is None:
+                        # set the selected piece
+                        self.selected_piece = self.chessmoves.set_piece(file_index, rank_index)
+
+                        if self.selected_piece[0] == 'Empty Square':
+                            # invalid square
+                            print("Please select a piece")
+                        else:
+                            # highlight the selected piece
+                            self.chessboard.highlight_square(file_index, rank_index) 
+                            self.chessboard.mainloop(screen)
+                            print(f"selected piece: {self.selected_piece}")
+
                     else:
+                        # read selected move
                         move_results = self.chessmoves.set_move(file_index, rank_index)
+                        self.chessboard.remove_highlight()
                         print(f"selected move: {move_results}")
 
-                        if move_results:
-                            self.find_piece(selected_piece[0], selected_piece[1], move_results[1])
-                            self.chessboard.mainloop(screen)
-
-                            # switch to the next player
+                        # validate the move
+                        if self.chessmoves.pawn_moves(self.selected_piece[0], self.selected_piece[1], move_results[1]):
+                            self.find_piece(self.selected_piece[0], self.selected_piece[1], move_results[1])
                             self.current_player = "black" if self.current_player == "white" else "white"
+                        
+                        # reset after move
+                        self.selected_piece = None
+                        self.chessboard.mainloop(screen)
 
-                        selected_piece = None
-
-            # stop the game
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+                # stop the game
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
         
-    # call the correct piece to move
     def find_piece(self, piecename, current_position, new_position):
         for piece in self.chessboard.pieces:
-            # move the pawn
             if isinstance(piece, Pawn) and piece.color in piecename:
-                print(piece.position)
-                if piece.position == tuple(current_position):
-                    piece.move(tuple(current_position), tuple(new_position))
-                    break
-            
-            # move the knight
-            if isinstance(piece, Knight) and piece.color in piecename:
-                if piece.position == tuple(current_position):
-                    piece.move(tuple(current_position), tuple(new_position))
-                    break
+                # is pawn
+                pass
+            elif isinstance(piece, Knight) and piece.color in piecename:
+                # is knight
+                pass
+            elif isinstance(piece, Bishop) and piece.color in piecename:
+                # is bishop
+                pass
+            elif isinstance(piece, Rook) and piece.color in piecename:
+                # is rook
+                pass
+            elif isinstance(piece, Queen) and piece.color in piecename:
+                # is queen
+                pass
+            elif isinstance(piece, King) and piece.color in piecename:
+                # is king
+                pass
+            else:
+                continue
 
-            # move the bishop
-            if isinstance(piece, Bishop) and piece.color in piecename:
-                if piece.position == tuple(current_position):
-                    piece.move(tuple(current_position), tuple(new_position))
-                    break
-
-            # move the rook
-            if isinstance(piece, Rook) and piece.color in piecename:
-                if piece.position == tuple(current_position):
-                    piece.move(tuple(current_position), tuple(new_position))
-                    break
-
-            # move the queen
-            if isinstance(piece, Queen) and piece.color in piecename:
-                if piece.position == tuple(current_position):
-                    piece.move(tuple(current_position), tuple(new_position))
-                    break
-
-            # move the king
-            if isinstance(piece, King) and piece.color in piecename:
-                if piece.position == tuple(current_position):
-                    piece.move(tuple(current_position), tuple(new_position))
-                    break
+            # move the piece
+            if piece.position == tuple(current_position):
+                piece.move(tuple(current_position), tuple(new_position))
+                break
 
 # start the game
 if __name__ == "__main__":
