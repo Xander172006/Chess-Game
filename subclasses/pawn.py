@@ -18,8 +18,9 @@ class Pawn:
         print(f"move has been made")
 
     # capture rule
-    def capture(self):
-        pass
+    def capture(self, piece, captured_piece, chessboard):
+        print(f"{piece} has captured {captured_piece.__class__.__name__}")
+        chessboard.remove_piece(captured_piece)
 
     # return the sprite of the pawn
     def sprite(self):
