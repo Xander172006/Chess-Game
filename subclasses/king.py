@@ -1,6 +1,7 @@
 # chess king.py
 
 class King:
+    # define the king
     def __init__(self, color):
         self.has_moved = False
         self.color = color
@@ -11,10 +12,21 @@ class King:
         else:
             self.position = ("e", 8)
 
-    def move(self):
+    # move rule
+    def move(self, current_position, new_position):
+        if self.position == current_position:
+            self.position = new_position
+            self.has_moved = True
+            print(self.position, new_position)
+
+        print(f"move has been made")
+
+    # castle rule
+    def castle(self):
         pass
 
-    def capture(self):
+    # return the sprite of the king
+    def sprite(self):
         white_king = './pieces_icons/white_king.png'
         black_king = './pieces_icons/black_king.png'
 
