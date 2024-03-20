@@ -1,6 +1,7 @@
 # chess queen.py
 
 class Queen:
+    # define the queen
     def __init__(self, color):
         self.has_moved = False
         self.color = color
@@ -11,10 +12,16 @@ class Queen:
         else:
             self.position = ("d", 8)
 
+    # move rule
     def move(self):
         pass
 
+    # capture rule
     def capture(self):
+        pass
+
+    # return the sprite of the queen    
+    def sprite(self):
         white_queen = './pieces_icons/white_queen.png'
         black_queen = './pieces_icons/black_queen.png'
 

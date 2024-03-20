@@ -4,15 +4,15 @@ class ChessMove():
     def __init__(self, board):
         self.board = board
 
-    def getPiece(self, file_index, rank_index):
-        # get the selected piece
-        coordinates = [file_index, rank_index]
-        piecename = self.board.get_piece(file_index, rank_index)
-
-        print(piecename, coordinates)
+    def get_piece(self, f_index, r_index):
+        coordinates = [f_index, r_index]
+        piecename = self.board.get_piece(f_index, r_index)
 
         return piecename, coordinates
     
-    def movePiece(self, piecename, coordinates):
-        # move the piece
-        pass
+    def move_piece(self, f_index, r_index):
+        coordinates = [f_index, r_index]
+        piecename = self.board.get_piece(f_index, r_index)
+
+        
+        return piecename, coordinates
