@@ -10,10 +10,13 @@ from subclasses.King import King
 
 class Board:
     def __init__(self):
-        self.square_size = 75 
+        self.square_size = 75
         self.width = 8 * self.square_size
         self.height = 8 * self.square_size
         self.selected_position = None
+
+        self.captured_pieces_white = []
+        self.captured_pieces_black = []
         
         self.font = pygame.font.Font(None, 20)
         self.pieces = self.create_pieces()
@@ -68,7 +71,6 @@ class Board:
     def remove_highlight(self):
         self.selected_position = None
         
-
     # draw the board
     def drawBoard(self, board):
         for x in range(8):
@@ -136,3 +138,13 @@ class Board:
             position = piece.position
             pieces_dict[position] = f"{piece.color} {piece.__class__.__name__.lower()}"
         return pieces_dict
+    
+    def remove_piece(self, position, piece):
+        file_index, rank_index = position
+        rank_index = int(rank_index)
+
+        for piece in self.pieces:
+            if piece.position == (file_index, rank_index):
+                self.pieces.remove(piece)
+                break
+
