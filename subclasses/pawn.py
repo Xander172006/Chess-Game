@@ -6,21 +6,21 @@ class Pawn:
     def __init__(self, color, starting_rank):
         self.has_moved = False
         self.color = color
+        self.starting_rank = starting_rank
         self.position = (starting_rank, 2) if color == "white" else (starting_rank, 7)
+
+        
+        
 
     # move rule
     def move(self, current_position, new_position):
-        if self.position == current_position:
-            self.position = new_position
-            self.has_moved = True
-            print(self.position, new_position)
+        pass
 
-        print(f"move has been made")
 
     # capture rule
     def capture(self, piece, captured_piece, chessboard):
-        print(f"{piece} has captured {captured_piece.__class__.__name__}")
-        chessboard.remove_piece(captured_piece)
+        pass
+
 
     # return the sprite of the pawn
     def sprite(self):
@@ -31,3 +31,5 @@ class Pawn:
             return white_pawn
         else:
             return black_pawn
+        
+        
