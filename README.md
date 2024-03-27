@@ -6,7 +6,7 @@ The game is fully written in Python.
 ## Installation
 Make sure that you have the following dependencies and libraries installed for this project:
 - [Python](https://docs.python.org/3/) served as the primair programming language
-- [Tkinter](https://www.geeksforgeeks.org/python-gui-tkinter/) to visualize the board and pieces
+- [Pygame](https://www.pygame.org/docs/ref/pygame.html) to visualize the board and pieces
 - [Numpy](https://numpy.org/devdocs/) for handling advance algorithms as such
 
 ### a. Python
@@ -16,10 +16,10 @@ Install `Python` using the following command:
 ```
 Ensure that you download the most recent version.
 
-### b. Tkinter
-Install `Tkinter` using the following command:
+### b. Pygame
+Install `Pygame` using the following command:
 ```bash
-  pip install tkinter
+  pip install pygame
 ```
 
 ### c. Numpy
