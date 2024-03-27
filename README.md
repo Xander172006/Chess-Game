@@ -48,7 +48,7 @@ If everything has been cloned and installe successfully, you will see two option
 
 ## Implementations & Rules
 
-![UML Diagram](./Brainstorming/Chess-game-diagram.png)
+![UML Diagram](./Brainstorming/chess-game-diagram.png)
 
 In the game of [Chess](https://nl.wikipedia.org/wiki/Chess) white will make the first move followed by blacks next one.
 If the king has been checkmated, there will be the option to play again either with switching colors or not.
