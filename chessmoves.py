@@ -5,8 +5,8 @@ from Position import Position
 class ChessMove():
     def __init__(self, board):
         self.board = board
-        self.pawn = Pawn(self.board, self)
         self.color = None
+        self.selected_position = None
 
     def chess_piece_information(self, f_index, r_index):
         piece = self.board.get_piece(f_index, r_index)
@@ -29,5 +29,3 @@ class ChessMove():
         move_dict['new_position'] = str(new_position[1])
 
         return move_dict
-        
-        

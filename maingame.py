@@ -1,44 +1,35 @@
 # maingame.py
+
 import pygame
 import sys
-import os
+import chess
 
-# import subclasses
-from subclasses.Pawn import Pawn
-from subclasses.Knight import Knight
-from subclasses.Bishop import Bishop
-from subclasses.Rook import Rook
-from subclasses.Queen import Queen
-from subclasses.King import King
-
-# initialize pygame
 from board import Board
 from chessmoves import ChessMove
 from chessrules import ChessRules
 
-import chess
-pygame.init()
-
-
 class MainGame:
     def __init__(self):
+        # use other classes
         self.chessboard = Board()
         self.chessmoves = ChessMove(self.chessboard)
         self.chessrules = ChessRules(self.chessboard)
 
-        # set beginning player
+        # set the current player
         self.current_player = "white"
 
-        # set the selected piece to None
+        # hold player interactions
+        self.selected_position = None
         self.selected_piece = None
         self.pieces = None
 
     def run(self):
         size = (640, 640)
         screen = pygame.display.set_mode(size)
+        screen.fill((0, 0, 0))
         pygame.display.set_caption("Chess Game")
 
-        # instantiate the board
+        # setup the game
         self.chessboard.run_board(screen)
         print(f"It's {self.current_player.capitalize()} to make a move!")
 
@@ -88,25 +79,60 @@ class MainGame:
                         move_validation = self.chessrules.is_legal_move(create_move)
 
                         if (move_validation):
+                            # castling
+                            if (self.chessrules.handle_castling(create_move)):
+                                self.chessboard.castling(create_move)
+                            
+                            # king is in check
+                            if (self.chessrules.board.is_check()):
+                                print(f"{self.current_player.capitalize()} King is in check!")
+
+
                             self.chessboard.move_piece(tuple(create_move['current_position']), tuple(create_move['new_position']))
                             self.current_player = "black" if self.current_player == "white" else "white"
+
+                            # print captured pieces
+                            if self.current_player == "white":
+                                print(f"Whites arsenal: {self.chessboard.captured_pieces_white}")
+                            else:
+                                print(f"Black's arsenal: {self.chessboard.captured_pieces_black}")
+
 
                             # reset after move for other player
                             self.selected_piece = None
                             self.chessboard.run_board(screen)
 
+                            print(self.chessboard.get_piece("h", 1))
+
+                            # give turn to other player
                             print(f"It's {self.current_player.capitalize()} to make a move!")
+
+                            # check for checkmate or stalemate
+                            if self.winner():
+                                break
                         else:
                             self.selected_piece = None
-
-
 
                 # stop the game
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
 
+
+    def winner(self):
+        # checkmate
+        if self.chessrules.is_checkmate():
+            print(f"{self.current_player.capitalize()} wins!")
+            return True
+        
+        # stalemate
+        if self.chessrules.is_stalemate():
+            print("Stalemate!")
+            return True
+
 # start the game
+pygame.init()
+
 if __name__ == "__main__":
     game = MainGame()
     game.run()
