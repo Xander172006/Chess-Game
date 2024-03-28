@@ -15,6 +15,7 @@ class Board:
         self.height = 8 * self.square_size
         self.selected_position = None
 
+        # store the pieces each player has captured
         self.captured_pieces_white = []
         self.captured_pieces_black = []
         
@@ -22,7 +23,7 @@ class Board:
         self.pieces = self.create_pieces()
 
 
-    # create pieces
+    # create pieces for white and black
     def create_pieces(self):
         pieces = []
 
@@ -44,13 +45,11 @@ class Board:
 
         return pieces
 
-
-    # run the board
+   # run the board
     def run_board(self, screen):
         board = pygame.surface.Surface((self.width, self.height))
-        board.fill((203, 172, 129))
 
-        # initialize the board position
+        # draw the board and pieces
         self.drawBoard(board)
         self.drawPieces(board)
 
@@ -59,9 +58,10 @@ class Board:
             x = ord(self.selected_position[0]) - ord('a')
             y = 8 - self.selected_position[1]
             rect = pygame.Rect(x * self.square_size, y * self.square_size, self.square_size, self.square_size)
-            pygame.draw.rect(board, (255, 0, 0), rect, 3)
+            pygame.draw.rect(board, (220, 183, 19), rect, 3)
 
-        screen.blit(board, (20, 20))
+        # draw the board on the screen at the center
+        screen.blit(board, ((screen.get_width() - self.width) // 2, (screen.get_height() - self.height) // 2))
         pygame.display.flip()
 
 
@@ -71,14 +71,15 @@ class Board:
     def remove_highlight(self):
         self.selected_position = None
         
+
     # draw the board
     def drawBoard(self, board):
         for x in range(8):
             for y in range(8):
                 if (x + y) % 2 == 0:
-                    color = (249, 220, 186)  # white
+                    color = (242, 240, 221)  # white
                 else:
-                    color = (109, 92, 74)  # black
+                    color = (54, 117, 4)  # black
                 pygame.draw.rect(board, color, (x * self.square_size, y * self.square_size, self.square_size, self.square_size))
 
         # number lines horizontally
@@ -130,21 +131,21 @@ class Board:
         size = (640, 640)
         screen = pygame.display.set_mode(size)
         self.run_board(screen)
-
-    def all_pieces(self):
-        pieces_dict = {}
-        for piece in self.pieces:
-            # Assuming each piece has a 'position' attribute
-            position = piece.position
-            pieces_dict[position] = f"{piece.color} {piece.__class__.__name__.lower()}"
-        return pieces_dict
     
     def remove_piece(self, position, piece):
         file_index, rank_index = position
         rank_index = int(rank_index)
 
+
         for piece in self.pieces:
             if piece.position == (file_index, rank_index):
                 self.pieces.remove(piece)
+                # add captured piece to the list
+                if piece.color == "white":
+                    self.captured_pieces_white.append(piece.__class__.__name__.lower())
+                else:
+                    self.captured_pieces_black.append(piece.__class__.__name__.lower())
                 break
 
+    def castling(self, move):
+        pass
