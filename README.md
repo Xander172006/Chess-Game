@@ -55,7 +55,7 @@ Finally, when the game is over the application will close with the results of th
 
 ## Implementations & customizing
 
-[<img src="./docs/screenshots/chessgame_class_diagram.png" width="400px" height="450px" />](./docs/screenshots/chessgame_class_diagram.png)
+[<img src="./docs/screenshots/chessgame_class_diagram.png" width="500px" height="450px" />](./docs/screenshots/chessgame_class_diagram.png)
 </br>
 
 If curious about the implementation of the game, you can find the UML diagram above.
