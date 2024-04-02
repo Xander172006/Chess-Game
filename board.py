@@ -1,15 +1,16 @@
 # board.py
 import pygame
 
-from subclasses.Pawn import Pawn
-from subclasses.Knight import Knight
-from subclasses.Bishop import Bishop
-from subclasses.Rook import Rook
-from subclasses.Queen import Queen
-from subclasses.King import King
+from subclasses.pawn import Pawn
+from subclasses.knight import Knight
+from subclasses.bishop import Bishop
+from subclasses.rook import Rook
+from subclasses.queen import Queen
+from subclasses.king import King
 
 class Board:
     def __init__(self):
+        # set the size of the board
         self.square_size = 75
         self.width = 8 * self.square_size
         self.height = 8 * self.square_size
@@ -58,7 +59,7 @@ class Board:
             x = ord(self.selected_position[0]) - ord('a')
             y = 8 - self.selected_position[1]
             rect = pygame.Rect(x * self.square_size, y * self.square_size, self.square_size, self.square_size)
-            pygame.draw.rect(board, (220, 183, 19), rect, 3)
+            pygame.draw.rect(board, (220, 183, 19), rect, 4)
 
         # draw the board on the screen at the center
         screen.blit(board, ((screen.get_width() - self.width) // 2, (screen.get_height() - self.height) // 2))
@@ -155,19 +156,63 @@ class Board:
                 # change to a knight
                 if int(piece) == 1:
                     piece_obj.__class__ = Knight
-                    print(f"pawn promoted to Knight")
+                    if "white" in move['piecename']:
+                        print(
+                                "\033[1mWhite pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1mWhite Knight \033[0m"
+                            )
+                    else:
+                        print(
+                                "\033[1;30mBlack pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1;30mBlack Knight \033[0m"
+                            )
 
                 # change to a bishop
                 if int(piece) == 2:
                     piece_obj.__class__ = Bishop
-                    print(f"pawn promoted to Bishop")
+                    if "white" in move['piecename']:
+                        print(
+                                "\033[1mWhite pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1mWhite Bishop \033[0m"
+                            )
+                    else:
+                        print(
+                                "\033[1;30mBlack pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1;30mBlack Bishop \033[0m"
+                            )
 
                 # change to a rook
                 if int(piece) == 3:
                     piece_obj.__class__ = Rook
-                    print(f"pawn promoted to Rook")
+                    if "white" in move['piecename']:
+                        print(
+                                "\033[1mWhite pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1mWhite Rook \033[0m"
+                            )
+                    else:
+                        print(
+                                "\033[1;30mBlack pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1;30mBlack Rook \033[0m"
+                            )
 
                 if int(piece) == 4:
                     piece_obj.__class__ = Queen
-                    print(f"pawn promoted to Queen")
+                    if "white" in move['piecename']:
+                        print(
+                                "\033[1mWhite pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1mWhite Queen \033[0m"
+                            )
+                    else:
+                        print(
+                                "\033[1;30mBlack pawn \033[0m" +
+                                "promoted to " +
+                                "\033[1;30mBlack Queen \033[0m"
+                            )
                 break

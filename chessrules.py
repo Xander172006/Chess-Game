@@ -10,7 +10,24 @@ class ChessRules(ChessRulesBase):
 
         # check if move is legal or is from promotion
         if self.board.is_legal(chess.Move.from_uci(uci_move)):
-            print(f"moved {move['piecename'].capitalize()} on {move['current_position']} to {move['new_position']}")
+            if 'white' in move['piecename']:
+                print(
+                        f"Moved" + 
+                        f"\033[1m ({move['piecename'].capitalize()}) \033[0m" + 
+                        "from" + 
+                        f"\033[1m ({move['current_position']}) \033[0m" + 
+                        "to" + 
+                        f"\033[1m ({move['new_position']})\033[0m"
+                      )
+            else:
+                print(
+                        f"Moved" + 
+                        f"\033[1;30m ({move['piecename'].capitalize()}) \033[0m" + 
+                        "from" + 
+                        f"\033[1;30m ({move['current_position']}) \033[0m" + 
+                        "to" + 
+                        f"\033[1;30m ({move['new_position']})\033[0m"
+                      )
 
             self.capture_piece(move)
             self.handle_castling(move)
@@ -50,7 +67,20 @@ class ChessRules(ChessRulesBase):
         if self.board.piece_at(chess.square(file_index, rank_index)):
             self.board.remove_piece_at(chess.square(file_index, rank_index))
             self.chessboard.remove_piece(new_pos, move['new_position_piecename'])
-            print(f"Captured {move['new_position_piecename']} at {move['new_position']}")
+            if 'white' in move['piecename']:
+                print(
+                        f"\033[1mCaptured\033[0m" + 
+                        f"\033[1;30m ({move['new_position_piecename']}) \033[0m" + 
+                        f"\033[1mat\033[0m" + 
+                        f"\033[1;30m ({move['new_position']}) \033[0m"
+                    )
+            else:
+                print(
+                        f"\033[1;30mCaptured\033[0m" + 
+                        f"\033[1m ({move['new_position_piecename']}) \033[0m" + 
+                        f"\033[1;30mat\033[0m" + 
+                        f"\033[1m ({move['new_position']}) \033[0m"
+                    )
 
 
     # king is in check
@@ -91,7 +121,20 @@ class ChessRules(ChessRulesBase):
             elif move['current_position'] == "e8" and move['new_position'] == "c8":
                 self.chessboard.move_piece(("a", 8), ("d", 8))
 
-            print(move['piecename'].capitalize() + " has castled")
+            if "white" in move['piecename']:
+                print(
+                        "--" + 
+                        f"\033[1m {move['piecename'].capitalize()} \033[0m" + 
+                        "has castled " + 
+                        " --"
+                    )
+            else:
+                print(
+                        "--" + 
+                        f"\033[1;30m {move['piecename'].capitalize()} \033[0m" + 
+                        "has castled " + 
+                        " --"
+                    )
 
 
     # en passant
@@ -119,24 +162,42 @@ class ChessRules(ChessRulesBase):
         current_position = move_info['current_position']
         new_position = move_info['new_position']
 
-        if int(current_position[1]) == 7:
-            if int(new_position[1]) == 8:
-                
-                if abs(ord(current_position[0]) - ord(new_position[0])) > 1:
-                    return False
-                else: 
-                    return True
-        elif int(current_position[1]) == 2:
-            if int(new_position[1]) == 1:
-                if abs(ord(current_position[0]) - ord(new_position[0])) > 1:
-                    return False
-                else: 
-                    return True
+        if "white" in move_info['piecename']:
+            if int(current_position[1]) == 7:
+                if int(new_position[1]) == 8:
+                    
+                    if abs(ord(current_position[0]) - ord(new_position[0])) > 1:
+                        return False
+                    else: 
+                        return True
+        else:
+            if int(current_position[1]) == 2:
+                if int(new_position[1]) == 1:
+                    if abs(ord(current_position[0]) - ord(new_position[0])) > 1:
+                        return False
+                    else: 
+                        return True
     
 
     # pawn promotion
     def handle_pawn_promotion(self, move):
-        print("Choose a piece to promote to: `knight = 1`, `bishop = 2`, `rook = 3`, `queen = 4`")
+        if "white" in move['piecename']:
+            print(
+                    "Select a number to promote to: \n" + 
+                    "1. \033[1mKnight\033[0m \n" 
+                    "2. \033[1mBishop\033[0m \n"
+                    "3. \033[1mRook\033[0m \n"
+                    "4. \033[1mQueen\033[0m"
+                )
+        else:
+            print(
+                    "Select a number to promote to: \n" + 
+                    "1. \033[1;30mKnight\033[0m \n" 
+                    "2. \033[1;30mBishop\033[0m \n"
+                    "3. \033[1;30mRook\033[0m \n"
+                    "4. \033[1;30mQueen\033[0m"
+                )
+            
         promoted_piece = input()
 
         piece_mapping = {
@@ -166,3 +227,4 @@ class ChessRules(ChessRulesBase):
             return check
         else:
             print("Invalid input")
+            return False
