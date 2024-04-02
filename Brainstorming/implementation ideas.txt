@@ -1,0 +1,4 @@
+Ideas:
+- working 2 player on two screens
+- live mode
+- ai chessbot
