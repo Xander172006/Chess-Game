@@ -42,16 +42,26 @@ Make sure you are in the correct directory and run the following command:
   python maingame.py
 ```
 
-Once it has been loaded in, you can start making interactions with the pieces on the board.<br>
-The commandline will keep track of the current game details.
+Once it has been loaded in, you can start making interactions with the pieces on the board.
+When interacting with a piece, that piece will be highlighted for better player management.
 <br>
+
+[<img src="./docs/screenshots/chessboard.png" width="400px" height="400px" />](./docs/screenshots/chessboard.png)
+
+The commandline will keep track of the current game details. It will also display moves that are made by the players.
+Finally, when the game is over the application will close with the results of the game.
+
+
 
 ## Implementations & customizing
 
-[<img src="./Brainstorming/chessgame_class_diagram.png" width="750px" height="800px" />](./Brainstorming/chessgame_class_diagram.png)
+[<img src="./docs/screenshots/chessgame_class_diagram.png" width="400px" height="450px" />](./docs/screenshots/chessgame_class_diagram.png)
 </br>
 
 If curious about the implementation of the game, you can find the UML diagram above.
+The diagram shows the classes that are required for this game project.
+
+
 
 For more information about the game of chess, you can go to either **[chess.com](https://chess.com)** or check out the offical **[chess wikipedia](https://en.wikipedia.org/wiki/Chess)** page.
 <br>
