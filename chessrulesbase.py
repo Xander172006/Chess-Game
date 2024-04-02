@@ -12,29 +12,37 @@ class ChessRulesBase(ABC):
         return uci_move
 
     @abstractmethod
+    def capture_piece(self, move):
+        pass
+
+    @abstractmethod
     def is_legal_move(self, move):
         pass
 
     @abstractmethod
-    def is_check(self, color):
+    def is_check(self):
         pass
 
     @abstractmethod
-    def is_checkmate(self, color):
+    def is_checkmate(self):
         pass
 
     @abstractmethod
-    def is_stalemate(self, color):
+    def is_stalemate(self):
         pass
 
     @abstractmethod
-    def handle_castling(self, color):
+    def handle_castling(self, move):
         pass
 
     @abstractmethod
-    def handle_en_passant(self):
+    def handle_en_passant(self, move):
         pass
 
     @abstractmethod
-    def handle_pawn_promotion(self, piece):
+    def can_promote_pawn(self, move):
+        pass
+
+    @abstractmethod
+    def handle_pawn_promotion(self, move):
         pass
