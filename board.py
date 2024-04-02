@@ -147,5 +147,27 @@ class Board:
                     self.captured_pieces_black.append(piece.__class__.__name__.lower())
                 break
 
-    def castling(self, move):
-        pass
+    def change_piece(self, move, piece):
+        coördinates = (move['current_position'][0], int(move['current_position'][1]))
+
+        for piece_obj in self.pieces:
+            if piece_obj.position == coördinates:
+                # change to a knight
+                if int(piece) == 1:
+                    piece_obj.__class__ = Knight
+                    print(f"pawn promoted to Knight")
+
+                # change to a bishop
+                if int(piece) == 2:
+                    piece_obj.__class__ = Bishop
+                    print(f"pawn promoted to Bishop")
+
+                # change to a rook
+                if int(piece) == 3:
+                    piece_obj.__class__ = Rook
+                    print(f"pawn promoted to Rook")
+
+                if int(piece) == 4:
+                    piece_obj.__class__ = Queen
+                    print(f"pawn promoted to Queen")
+                break

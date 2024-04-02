@@ -85,7 +85,10 @@ class MainGame:
                             
                             # king is in check
                             if (self.chessrules.board.is_check()):
-                                print(f"{self.current_player.capitalize()} King is in check!")
+                                if self.current_player == "white":
+                                    print("Black King is in check!")
+                                else:
+                                    print("White King is in check!")
 
 
                             self.chessboard.move_piece(tuple(create_move['current_position']), tuple(create_move['new_position']))
@@ -93,9 +96,9 @@ class MainGame:
 
                             # print captured pieces
                             if self.current_player == "white":
-                                print(f"Whites arsenal: {self.chessboard.captured_pieces_white}")
+                                print(f"Black's arsenal: {self.chessboard.captured_pieces_white}")
                             else:
-                                print(f"Black's arsenal: {self.chessboard.captured_pieces_black}")
+                                print(f"Whites arsenal: {self.chessboard.captured_pieces_black}")
 
 
                             # reset after move for other player
@@ -122,7 +125,10 @@ class MainGame:
     def winner(self):
         # checkmate
         if self.chessrules.is_checkmate():
-            print(f"{self.current_player.capitalize()} wins!")
+            if self.current_player == "white":
+                print("Black wins!")
+            else:
+                print("White wins!")
             return True
         
         # stalemate
