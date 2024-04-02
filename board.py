@@ -1,12 +1,12 @@
 # board.py
 import pygame
 
-from subclasses.Pawn import Pawn
-from subclasses.Knight import Knight
-from subclasses.Bishop import Bishop
-from subclasses.Rook import Rook
-from subclasses.Queen import Queen
-from subclasses.King import King
+from subclasses.pawn import Pawn
+from subclasses.knight import Knight
+from subclasses.bishop import Bishop
+from subclasses.rook import Rook
+from subclasses.queen import Queen
+from subclasses.king import King
 
 class Board:
     def __init__(self):

@@ -1,5 +1,4 @@
 # chessmoves.py
-from subclasses.Pawn import Pawn
 from Position import Position
 
 class ChessMove():
